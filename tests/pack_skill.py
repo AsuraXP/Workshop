@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Regenerate kit/tools/verify_kit.py SHA-256 hashes and package code-film-studio.plugin cleanly."""
+"""Regenerate Skill/kit/tools/verify_kit.py SHA-256 hashes and package Skill.zip cleanly."""
 import argparse, hashlib, shutil, zipfile
 from pathlib import Path
 
-STUDIO_ROOT = Path(__file__).resolve().parent
-KIT = STUDIO_ROOT / "skills/make-film/kit"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+SKILL_DIR = REPO_ROOT / "Skill"
+KIT = SKILL_DIR / "kit"
 
 PROTECTED_GLOBS = [
     "package.json",
@@ -70,37 +71,34 @@ def update_verify_kit() -> int:
     return len(rels)
 
 
-def build_plugin_archive(out_path: Path) -> int:
-    # Clean transient pycache directories first
-    for pyc in STUDIO_ROOT.rglob("__pycache__"):
+def build_skill_zip(out_path: Path) -> int:
+    for pyc in SKILL_DIR.rglob("__pycache__"):
         shutil.rmtree(pyc, ignore_errors=True)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     count = 0
     with zipfile.ZipFile(out_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
-        for sub in (".claude-plugin", "skills"):
-            base = STUDIO_ROOT / sub
-            for p in sorted(base.rglob("*")):
-                if any(part in EXCLUDE_DIRS for part in p.parts):
-                    continue
-                if p.is_file() and not p.name.endswith((".pyc", ".pyo", ".DS_Store")):
-                    arcname = p.relative_to(STUDIO_ROOT).as_posix()
-                    zi = zipfile.ZipInfo(arcname, date_time=(2026, 1, 1, 0, 0, 0))
-                    zi.compress_type = zipfile.ZIP_DEFLATED
-                    zi.external_attr = (0o755 if p.suffix in {".py", ".mjs"} else 0o644) << 16
-                    zf.writestr(zi, p.read_bytes())
-                    count += 1
+        for p in sorted(SKILL_DIR.rglob("*")):
+            if any(part in EXCLUDE_DIRS for part in p.parts):
+                continue
+            if p.is_file() and not p.name.endswith((".pyc", ".pyo", ".DS_Store")):
+                arcname = ("Skill/" + p.relative_to(SKILL_DIR).as_posix())
+                zi = zipfile.ZipInfo(arcname, date_time=(2026, 1, 1, 0, 0, 0))
+                zi.compress_type = zipfile.ZIP_DEFLATED
+                zi.external_attr = (0o755 if p.suffix in {".py", ".mjs"} else 0o644) << 16
+                zf.writestr(zi, p.read_bytes())
+                count += 1
     return count
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Update verify_kit.py hashes and build .plugin archive.")
-    ap.add_argument("--out", default=str(STUDIO_ROOT.parent / "code-film-studio.plugin"))
+    ap = argparse.ArgumentParser(description="Update verify_kit.py hashes and build Skill.zip archive.")
+    ap.add_argument("--out", default=str(REPO_ROOT / "Skill.zip"))
     args = ap.parse_args()
 
     n_hashed = update_verify_kit()
     out = Path(args.out).resolve()
-    n_packed = build_plugin_archive(out)
+    n_packed = build_skill_zip(out)
     print(f"Updated verify_kit.py ({n_hashed} files hashed) and packed {n_packed} files -> {out}")
 
 

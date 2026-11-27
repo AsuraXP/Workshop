@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '../..');
-const KIT = path.join(ROOT, 'code-film-studio/skills/make-film/kit');
+const KIT = path.join(ROOT, 'Skill/kit');
 const PROJ = __dirname;
 const VIDEO_PATH = path.join(ROOT, 'why-you-never-touch-anything.mp4');
 const PORT = Number(process.env.PORT || 4173);
