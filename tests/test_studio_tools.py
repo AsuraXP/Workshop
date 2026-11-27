@@ -138,6 +138,7 @@ class CodeFilmStudioTests(unittest.TestCase):
             self.assertIn("Skill/kit/audio/tts.py", names)
             self.assertIn("Skill/kit/tools/thumbnail.py", names)
             self.assertIn("Skill/references/voice-and-thumbnail.md", names)
+            self.assertIn("Skill/references/signature-format.md", names)
             self.assertIn("Skill/kit/engine/rig2d.js", names)
             self.assertIn("Skill/kit/tools/qa.py", names)
 
@@ -191,7 +192,7 @@ class CodeFilmStudioTests(unittest.TestCase):
         # 4. Verify README.md & Skill/SKILL.md document all shortcut tags
         readme = (STUDIO_ROOT / "README.md").read_text("utf-8")
         skill_doc = (SKILL_DIR / "SKILL.md").read_text("utf-8")
-        for tag in ("[EXPLAINER]", "[2ND-PERSON]", "[STORY]", "[DIALOGUE]", "[MY-VO]", "[SHORT]", "[SILENT]", "@voice:auto", "@thumb"):
+        for tag in ("[SIGNATURE]", "[EXPLAINER]", "[2ND-PERSON]", "[STORY]", "[DIALOGUE]", "[MY-VO]", "[SHORT]", "[SILENT]", "@voice:auto", "@thumb"):
             self.assertIn(tag, readme)
             self.assertIn(tag, skill_doc)
 
