@@ -18,7 +18,8 @@ Users can type plain English **or** drop these shorthand tags anywhere in their 
 ### Video Format Shortcuts
 | Tag | Direction, POV, Pacing & Audio Recipe |
 |-----|---------------------------------------|
-| **`[EXPLAINER]`** *(default for topic questions)* | Curiosity hook in `<3s`, 2nd-person *"you"*, macro/diagram cutaways + `statCard`/`compareBars` UI, `-14 LUFS` mix, default `brian` narrator (or `brian` + `af_heart` co-host). |
+| **`[SIGNATURE]`** *(Flagship House Format — read `$REFS/signature-format.md`!)* | **The *"Why You Never Touch Anything"* 5-Act Blueprint (~55–70s, 10–12 shots):** Off-screen 2nd-person Narrator (`brian` via `edge-tts`) + skeptical/witty on-screen Co-Star (`af_heart` via `Kokoro`, 3 punchy interruptions) + silent `MC v2` Protagonist holding a recurring prop (`handPos`). Alternates Cozy Room -> Dark Blueprint Cutaway (`10,000,000x` + `compareBars` + L-cuts) -> Bright Daylight Breather Gag -> `bigFace` + Extreme Stakes Lab -> Poetic `@awaken` Sunset Balcony payoff. |
+| **`[EXPLAINER]`** | Curiosity hook in `<3s`, 2nd-person *"you"*, macro/diagram cutaways + `statCard`/`compareBars` UI, `-14 LUFS` mix, single `brian` narrator (unless `@voice:female` or `@voice:pair`). |
 | **`[2ND-PERSON]`** | Immersive *"You wake up..."* narrative POV, atmospheric slow camera pushes, **zero** explainer charts/UI cards, expressive `MC v2` acting, `-16 LUFS` cinema mix. |
 | **`[STORY]`** | 3rd-person narrated tale + character close-ups (`bigFace`), emotional score arc (`somber` -> `wonder` -> `uplift`), `-16 LUFS` mix, no data overlays. |
 | **`[DIALOGUE]`** | 2+ `MC v2` characters conversing (`brian` + `af_heart` by default, or `@voice:auto`), snappy L-cuts timed to breath pauses, 180° screen-side continuity. |

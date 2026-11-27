@@ -37,7 +37,8 @@ You do **not** need to write long technical instructions. Just drop any of these
 
 | Shortcut | Best For | What the Agent Does Automatically |
 |----------|----------|-----------------------------------|
-| **`[EXPLAINER]`** | Science, tech, history, *"Why does X happen?"* | `<3s` curiosity hook, 2nd-person *"you"*, macro zoom diagrams + animated `statCard`/`compareBars`, crisp `-14 LUFS` web master. |
+| **`[SIGNATURE]`** ⭐ *(Flagship House Style!)* | **Exact format of *"Why You Never Touch Anything"*** | **5-Act, 10–12 shot ~60s film (`Skill/references/signature-format.md`):** 2nd-person Narrator (`Brian` in `edge-tts`) + witty skeptical Co-Star (`af_heart` in `Kokoro`, 3 funny interruptions) + visual `MC v2` protagonist; alternates Cozy Room → Dark Blueprint Zoom → Bright Daylight Gag → Extreme Stakes Climax → Warm `@awaken` Sunset Balcony ending! |
+| **`[EXPLAINER]`** | Straight single-voice science/tech/history | `<3s` curiosity hook, 2nd-person *"you"*, macro zoom diagrams + animated `statCard`/`compareBars`, crisp `-14 LUFS` web master (`Brian` narrator). |
 | **`[2ND-PERSON]`** | Immersive *"What if you..."* / *"You wake up..."* videos | Pure 2nd-person storytelling, slow atmospheric camera pushes, **no** charts or UI clutter, `-16 LUFS` cinema dynamics. |
 | **`[STORY]`** | 3rd-person tales, fables, mini-dramas | Expressive `MC v2` character acting, `bigFace` emotional close-ups, sectioned score arc (`somber` → `wonder` → `uplift`). |
 | **`[DIALOGUE]`** | 2+ characters talking, comedy skits, debates | Casts distinct voices (`Brian` + `af_heart` by default), cuts on natural breath pauses (L-cuts), locks 180° camera sides. |
@@ -90,7 +91,14 @@ Drop any `@style` tag into your prompt:
 
 ## 3. Copy-Paste Example Prompts
 
-- **Classic Explainer (`Brian` voice + AI Thumbnail):**
+- **⭐ Flagship House Style (Exact *"Why You Never Touch Anything"* Recipe!):**
+  > `[SIGNATURE] Make a 65s video about why time actually runs slightly slower at your feet than at your head.`
+  >
+  > `[SIGNATURE] Make a 60s video about why mirrors don't actually flip left and right—they flip front and back.`
+  >
+  > `[SIGNATURE] Make a 65s video about why there is no such thing as the color pink in the rainbow.`
+
+- **Classic Single-Voice Explainer (`Brian` voice + AI Thumbnail):**
   > `[EXPLAINER] @awaken @thumb Make a 60s video about why airplanes don't flap their wings.`
 
 - **Female-Narrated Science Video (`Kokoro af_heart`):**
