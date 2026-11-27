@@ -45,7 +45,6 @@ for mod, pip_name, required in [
     ("PIL", "pillow", True),
     ("cv2", "opencv-python-headless (optional, faster qa.py decode)", False),
     ("edge_tts", "edge-tts (primary male TTS engine -> en-US-BrianMultilingualNeural)", False),
-    ("faster_whisper", "faster-whisper (optional, for uploaded voiceover alignment)", False),
 ]:
     try:
         __import__(mod)

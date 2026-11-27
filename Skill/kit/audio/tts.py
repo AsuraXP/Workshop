@@ -459,15 +459,24 @@ def main():
     if args.cues:
         cues_path = Path(args.cues).resolve()
         proj = Path(args.project).resolve() if args.project else cues_path.parent.parent
+        cfg = load_json(proj / "config.json", {})
+        target_dur = float(cfg.get("duration") or 60.0)
         doc = load_json(cues_path, [])
         items = doc.get("cues", []) if isinstance(doc, dict) else doc
         results = []
+        pacing_warnings = []
+        total_voiced_sec = 0.0
+
         for i, c in enumerate(items, start=1):
             cid = c.get("id") or f"line_{i:02d}"
+            txt = str(c["text"]).strip()
+            word_count = len(txt.split())
+            if word_count > 14:
+                pacing_warnings.append(f"[{cid}] has {word_count} words (>14 word Awaken sparse-line cap) — trim or split so visuals carry the beat.")
             rel_out = c.get("out") or f"audio/lines/{cid}.wav"
             out_p = (proj / rel_out).resolve()
             res = synthesize_line(
-                str(c["text"]),
+                txt,
                 voice=c.get("voice", args.voice),
                 out_path=out_p,
                 speed=float(c.get("speed", args.speed)),
@@ -476,11 +485,30 @@ def main():
             )
             res["id"] = cid
             res["rel_file"] = rel_out
+            res["word_count"] = word_count
+            voiced_len = max(0.0, float(res["speech_end"]) - float(res["speech_start"]))
+            total_voiced_sec += voiced_len
             results.append(res)
-            print(f"[{cid}] {res['engine']}:{res['voice_id']} -> {rel_out} ({res['duration']:.2f}s, speech {res['speech_start']:.2f}..{res['speech_end']:.2f}s, pauses={res['pauses']})")
+            print(f"[{cid}] {res['engine']}:{res['voice_id']} -> {rel_out} ({res['duration']:.2f}s, {word_count}w, pauses={res['pauses']})")
+
+        est_ratio = round(total_voiced_sec / max(1.0, target_dur), 3)
+        if est_ratio > 0.42:
+            pacing_warnings.append(
+                f"Total speech ({total_voiced_sec:.1f}s) is {est_ratio*100:.0f}% of {target_dur:.0f}s target (>42% Awaken ceiling) — "
+                "cut unnecessary lines or lengthen visual breathing space."
+            )
+
         report_path = proj / "audio/tts_report.json"
-        save_json(report_path, {"lines": results})
-        print(f"Wrote TTS timing report -> {report_path}")
+        save_json(report_path, {
+            "total_voiced_sec": round(total_voiced_sec, 2),
+            "target_duration_sec": target_dur,
+            "estimated_speech_ratio": est_ratio,
+            "warnings": pacing_warnings,
+            "lines": results,
+        })
+        print(f"Wrote TTS timing report -> {report_path} (voiced: {total_voiced_sec:.1f}s / {target_dur:.1f}s = {est_ratio*100:.0f}%)")
+        for w in pacing_warnings:
+            print(f"  [PACING WARN] {w}")
         return
 
     ap.error("Provide --list-voices, --text '...', or --cues cues.json")

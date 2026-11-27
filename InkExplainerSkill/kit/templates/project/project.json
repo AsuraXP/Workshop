@@ -1,0 +1,11 @@
+{
+  "title": "Untitled Ink Explainer",
+  "width": 1920,
+  "height": 1080,
+  "fps": 24,
+  "duration_sec": 0,
+  "voice": "en-US-BrianMultilingualNeural",
+  "audio_mix": "audio/mix.wav",
+  "output": "exports/final.mp4",
+  "contact_sheet": "exports/contact-sheet.png"
+}

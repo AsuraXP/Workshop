@@ -1,0 +1,11 @@
+{
+  "id": "ink-explainer-code-film-studio",
+  "version": "1.0.0",
+  "voice_default": {
+    "provider": "edge-tts",
+    "voice_id": "en-US-BrianMultilingualNeural",
+    "display_name": "Brian"
+  },
+  "visual_profile": "flat-2d-black-ink-webcomic",
+  "package_isolation": "separate-from-awaken-skill"
+}

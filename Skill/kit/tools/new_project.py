@@ -133,39 +133,23 @@ QA_MD = """# Critic & Technical QA Report
 def main():
     ap = argparse.ArgumentParser(description="Create a universal Code Film Studio project.")
     ap.add_argument("dir", help="Target folder to create")
-    ap.add_argument("--voice", default=None, help="Optional voiceover audio file (.mp3/.wav/.m4a)")
-    ap.add_argument("--script", default=None, help="Optional script markdown/text file")
+    ap.add_argument("--script", default=None, help="Optional sparse script markdown/text file")
     ap.add_argument("--title", default="Untitled Film")
-    ap.add_argument("--style", default="awaken", help="Visual style preset (awaken, daylight, cinema, noir, emerald, ember, arctic, sakura, retro)")
+    ap.add_argument("--style", default="awaken", help="Visual world palette (awaken, daylight, cinema, noir, emerald, ember, arctic, sakura, retro)")
     ap.add_argument("--aspect", default="16:9", choices=["16:9", "9:16"])
     ap.add_argument("--fps", type=int, default=24)
-    ap.add_argument("--duration", type=float, default=None, help="Target duration in seconds when creating without voiceover")
+    ap.add_argument("--duration", type=float, default=60.0, help="Target duration in seconds")
     ap.add_argument("--bars", default="none", help="Letterbox bars: none | thin | wide | scope")
-    ap.add_argument("--loudness", type=float, default=-14.0, help="Target integrated LUFS (-14 web/YouTube, -16 narrative)")
+    ap.add_argument("--loudness", type=float, default=-14.0, help="Target integrated LUFS (-14 web, -16 narrative)")
     args = ap.parse_args()
 
     proj = Path(args.dir).resolve()
-    for sub in ("audio", "timeline", "story", "scenes/sets", "production", "build", "qa", "exports"):
+    for sub in ("audio/lines", "timeline", "story", "scenes/sets", "production", "build", "qa", "exports"):
         (proj / sub).mkdir(parents=True, exist_ok=True)
 
-    vo_rel = None
-    dur = args.duration or 8.0
-    mode = "prompt-only / autonomous"
-    audio_mode = "Instrumental + Foley (or add dialogue/VO)"
-
-    if args.voice:
-        vo_src = Path(args.voice).resolve()
-        if not vo_src.exists():
-            sys.exit(f"ERROR: voiceover not found: {vo_src}")
-        vo_dst = proj / "audio" / f"voiceover{vo_src.suffix.lower()}"
-        shutil.copy2(vo_src, vo_dst)
-        vo_rel = f"audio/{vo_dst.name}"
-        try:
-            dur = round(media_duration(vo_dst), 2)
-        except Exception:
-            dur = args.duration or 10.0
-        mode = "voiceover-driven"
-        audio_mode = f"Voiceover ({vo_rel}) with auto-ducked score & ambience"
+    dur = float(args.duration or 60.0)
+    mode = "awaken sparse-voice cinema"
+    audio_mode = "Sparse speech (<=40% runtime via tts.py: brian + af_heart) + swelling score + Foley"
 
     if args.script:
         sc_src = Path(args.script).resolve()
@@ -174,11 +158,14 @@ def main():
         txt = sc_src.read_text("utf-8")
         (proj / "script.txt").write_text(txt, "utf-8")
         (proj / "production/script.md").write_text(txt, "utf-8")
-        if not args.voice:
-            mode = "script-driven"
-            audio_mode = "Scripted timing (captions, dialogue clips, or silent visual acting)"
     else:
-        (proj / "production/script.md").write_text(f"# Script — {args.title}\n\n[00:00.0] Opening visual beat.\n", "utf-8")
+        (proj / "production/script.md").write_text(
+            f"# Sparse Script — {args.title}\n\n"
+            "[SILENT 2.0s] Atmospheric opening visual beat.\n"
+            "Short hook line — only what visuals cannot say alone.\n"
+            "[SILENT 2.5s] Visual reaction, Foley, and music swell.\n",
+            "utf-8",
+        )
 
     save_json(proj / "config.json", {
         "title": args.title,
@@ -188,11 +175,11 @@ def main():
         "fps": args.fps,
         "duration": dur,
         "style": args.style,
-        "voiceover": vo_rel,
-        "captions": args.aspect == "9:16" and bool(vo_rel),
+        "voiceover": None,
+        "captions": False,
         "storyCaptions": True,
         "bars": args.bars,
-        "music": {"mood": "wonder", "gain": -15},
+        "music": {"mood": "curious", "gain": -15.5},
         "loudness": args.loudness,
     })
 
@@ -205,7 +192,7 @@ def main():
             "in": "fadeBlack",
             "out": "fadeBlack" if s1_dur >= dur else "cut",
             "location": "mainStage",
-            "summary": "Opening shot",
+            "summary": "Opening atmospheric shot",
             "ambience": {"kind": "night", "gain": -26},
             "sfx": [],
         }]
@@ -225,11 +212,8 @@ def main():
     (proj / "production/audio.md").write_text(AUDIO_MD.format(audio_mode=audio_mode, loudness=args.loudness), "utf-8")
     (proj / "production/qa.md").write_text(QA_MD, "utf-8")
 
-    print(f"Created project at {proj} (mode: {mode}, duration: {dur:.2f}s)")
-    if vo_rel:
-        print(f"Next: transcribe/align {vo_rel} or run parse_script.py / plan_timeline.py")
-    else:
-        print("Next: develop production/*.md, then run tools/plan_timeline.py or edit story/shots.json")
+    print(f"Created project at {proj} (mode: {mode}, aspect: {args.aspect}, target: {dur:.1f}s)")
+    print("Next: write sparse cues in audio/cues.json -> run audio/tts.py -> build story/shots.json & scenes/")
 
 
 if __name__ == "__main__":
