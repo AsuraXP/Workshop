@@ -22,7 +22,7 @@ sys.path.insert(0, str(HERE.parent / "tools"))
 from dsp import SR, secs, db, place_sec, write_wav, softclip
 from sfx import render_sfx, render_ambience
 from music import render_bed, render_sections
-from common import require_bin, project_dir, load_json
+from common import require_bin, project_dir, load_json, save_json
 
 
 def decode_audio(src: Path, ff: str) -> np.ndarray:
@@ -120,6 +120,9 @@ def main():
                 has_any_speech = True
 
     duck = voice_envelope(voice).astype(np.float32) if has_any_speech else np.zeros(n, dtype=np.float32)
+    raw_speech_mask = (np.mean(np.abs(voice), axis=1) > 0.008) if has_any_speech else np.zeros(n, dtype=bool)
+    speech_sec = round(float(np.sum(raw_speech_mask)) / SR, 2)
+    speech_ratio = round(speech_sec / max(0.1, dur), 3)
 
     # 2. Music bed (sectioned or single mood)
     mcfg = cfg.get("music", {"mood": "wonder", "gain": -15})
@@ -170,7 +173,13 @@ def main():
 
     _, norm = wavfile.read(out)
     pk = 20 * np.log10(max(1e-6, np.max(np.abs(norm)) / 32768.0))
-    print(f"Mixed {dur:.1f}s -> {out}  (target {target_lufs:.1f} LUFS, peak {pk:.1f} dBFS, speech={'yes' if has_any_speech else 'no'}, {len(shots)} shots)")
+    save_json(proj / "build/mix_stats.json", {
+        "duration_sec": round(dur, 3),
+        "has_speech": has_any_speech,
+        "speech_sec": speech_sec,
+        "speech_ratio": speech_ratio,
+    })
+    print(f"Mixed {dur:.1f}s -> {out}  (target {target_lufs:.1f} LUFS, peak {pk:.1f} dBFS, speech={speech_ratio*100:.0f}% [{speech_sec:.1f}s], {len(shots)} shots)")
 
 
 if __name__ == "__main__":

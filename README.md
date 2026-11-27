@@ -1,10 +1,15 @@
-# Workshop — Unified Film Studio `Skill` (`v2.2.0`)
+# Workshop — Awaken Sparse-Voice Film `Skill` (`v3.0`)
 
-Drop **`Skill/`** (or upload **`Skill.zip`**) into Claude, Qwen, Cursor, Codex, or OpenCode to turn your agent into a **complete animated video, voiceover, soundtrack, and YouTube thumbnail studio** — 100% free, code-driven, and autonomous.
+A focused, zero-bloat **Awaken-style animated film skill (`Skill/` & `Skill.zip`)** for Claude, Qwen, Cursor, Codex, and OpenCode.
+
+Instead of generating wall-to-wall YouTube essay narration, this skill enforces **visual-first cinema**:
+- **60–70% of every film** is carried by **`MC v2` character acting, multi-plane camera motion, Foley sound effects, and swelling music**.
+- **30–40% max** is sparse, high-impact speech (`<= 12–14 words` per cue, enforced automatically by `tts.py` and `qa.py`) using **`Brian`** (`edge-tts`) for male voices and **`af_heart`** (`Kokoro`) for female voices.
+- Supports both **`16:9` widescreen** *(default)* and **`9:16` vertical** (`@vertical`), plus automatic **AI + Code Thumbnails**.
 
 ---
 
-## 1. Quick Attach (One-Time Setup)
+## 1. Attach `Skill` to Your Agent
 
 ### Grab Only `Skill` From GitHub
 ```bash
@@ -15,118 +20,41 @@ git sparse-checkout set Skill
 git checkout
 ```
 
-### Attach to Your Agent
-- **Web / Desktop UI ("Upload Skill" in Claude.ai, Qwen Agent Builder, etc.):** Upload **`Skill.zip`**.
-- **Claude Code CLI:**
-  ```bash
-  mkdir -p ~/.claude/skills && cp -R Skill ~/.claude/skills/code-film-studio
-  ```
-- **Qwen-Code / Codex / OpenCode / Cursor:**
-  ```bash
-  mkdir -p .agents/skills && cp -R Skill .agents/skills/code-film-studio
-  ```
-  *(Or keep `Skill/` in your project folder and mention **`@Skill/SKILL.md`** in chat!)*
+### Load It
+- **Upload ZIP (Claude.ai / Desktop / Web Agent Builders):** Upload **`Skill.zip`**.
+- **Claude Code CLI:** `mkdir -p ~/.claude/skills && cp -R Skill ~/.claude/skills/awaken-film-studio`
+- **Qwen / Codex / Cursor / OpenCode:** `mkdir -p .agents/skills && cp -R Skill .agents/skills/awaken-film-studio` *(or mention `@Skill/SKILL.md` in chat)*.
 
 ---
 
-## 2. Prompt Shortcuts Cheat Sheet (Tips & Tricks)
+## 2. How to Use It (Just Describe Your Idea!)
 
-You do **not** need to write long technical instructions. Just drop any of these **Shortcut Tags** into your prompt and `Skill/SKILL.md` automatically configures the camera language, script POV, pacing, voice casting, loudness target, aspect ratio, and thumbnail!
+No format bloat needed—every prompt automatically builds a sparse-voice Awaken film:
 
-### A. Video Type Shortcuts (Pick 1)
+- **Default (`16:9` Awaken Twilight, `Brian` + `af_heart` sparse cast + Thumbnail):**
+  > `Make a 60s video about why time actually runs slightly slower at your feet than at your head.`
 
-| Shortcut | Best For | What the Agent Does Automatically |
-|----------|----------|-----------------------------------|
-| **`[SIGNATURE]`** ⭐ *(Flagship House Style!)* | **Exact format of *"Why You Never Touch Anything"*** | **5-Act, 10–12 shot ~60s film (`Skill/references/signature-format.md`):** 2nd-person Narrator (`Brian` in `edge-tts`) + witty skeptical Co-Star (`af_heart` in `Kokoro`, 3 funny interruptions) + visual `MC v2` protagonist; alternates Cozy Room → Dark Blueprint Zoom → Bright Daylight Gag → Extreme Stakes Climax → Warm `@awaken` Sunset Balcony ending! |
-| **`[EXPLAINER]`** | Straight single-voice science/tech/history | `<3s` curiosity hook, 2nd-person *"you"*, macro zoom diagrams + animated `statCard`/`compareBars`, crisp `-14 LUFS` web master (`Brian` narrator). |
-| **`[2ND-PERSON]`** | Immersive *"What if you..."* / *"You wake up..."* videos | Pure 2nd-person storytelling, slow atmospheric camera pushes, **no** charts or UI clutter, `-16 LUFS` cinema dynamics. |
-| **`[STORY]`** | 3rd-person tales, fables, mini-dramas | Expressive `MC v2` character acting, `bigFace` emotional close-ups, sectioned score arc (`somber` → `wonder` → `uplift`). |
-| **`[DIALOGUE]`** | 2+ characters talking, comedy skits, debates | Casts distinct voices (`Brian` + `af_heart` by default), cuts on natural breath pauses (L-cuts), locks 180° camera sides. |
-| **`[MY-VO]`** | Animating **your own** recorded voiceover | Keeps your `.mp3`/`.wav` 100% untouched, runs Whisper word-sync, auto-ducks music `-9 dB` under your voice, animates to your cadence. |
-| **`[SHORT]`** | YouTube Shorts, Reels, TikTok (`9:16`) | Renders `1080×1920` vertical, `<1.5s` hook, fast `2.5–4s` cuts, burned-in captions, plus a `9:16` vertical cover thumbnail. |
-| **`[SILENT]`** | Visual poetry, lo-fi / music-driven shorts | Zero dialogue — pure visual acting, rich Foley (`rain`, `footstep`, `wind`), and `+4 dB` fuller musical score. |
+- **Vertical `9:16` Cut (`@vertical`):**
+  > `@vertical Make a 45s film about what happens in the quiet space between two neurons firing.`
 
----
+- **World Color Moods (Optional `@<palette>`):**
+  - `@awaken` *(default warm twilight)* · `@noir` *(midnight mystery)* · `@arctic` *(deep ice-cyan science/space)* · `@cinema` *(slate & ember drama)* · `@daylight` *(bright outdoor)* · `@emerald` · `@ember` · `@sakura` · `@retro`
 
-### B. Voice Shortcuts (`edge-tts` Male + `Kokoro` Female — 100% Free)
-
-`Skill/kit/audio/tts.py` automatically combines **`edge-tts`** (for natural male voices) and **`Kokoro`** (for natural female voices):
-
-| Shortcut | What Voice(s) Get Used |
-|----------|------------------------|
-| *(no tag / `@voice:male`)* | **Main Male Locked:** `edge-tts` → **`en-US-BrianMultilingualNeural`** (`brian`) — warm, clear signature narrator. |
-| **`@voice:female`** | **Main Female Locked:** `Kokoro` → **`af_heart`** — flagship natural, expressive female narrator. |
-| **`@voice:pair`** | **Signature Duo:** **`brian`** (`edge-tts`) + **`af_heart`** (`Kokoro`) — ideal for co-hosted explainers & 2-person skits. |
-| **`@voice:auto`** | **Smart Casting:** Agent picks the best-fitting male voice(s) from **`edge-tts`** (`brian`, `andrew`, `eric` deadpan, `christopher` deep/noir, `guy` energetic, `ryan` UK, `roger` elder) and female voice(s) from **`Kokoro`** (`af_heart`, `af_bella` emotional, `af_sarah` crisp science, `af_nicole` calm/noir, `af_nova` bright/short, `af_sky` curious, `bf_emma` UK) per character & genre! |
-
-*(Want to force one specific character voice? You can even write `@voice:christopher` or `@voice:bf_emma`! Run `python3 Skill/kit/audio/tts.py --list-voices` anytime to see the full table.)*
+- **Voice & Workflow Tags (Optional):**
+  - *(default)*: `Brian` (`edge-tts`) + `af_heart` (`Kokoro`) sparse duo
+  - `@voice:male`: solo `Brian` (`edge-tts`) · `@voice:female`: solo `af_heart` (`Kokoro`) · `@voice:auto`: casts character-matched male (`edge-tts`) & female (`Kokoro`) voices · `@silent`: zero speech, 100% music + Foley
+  - `@thumb` *(default AI+code thumbnail)* · `@thumb:code` · `@no-thumb` · `@pause` *(preview script + 9-style sheet before rendering)*
 
 ---
 
-### C. Visual Style Shortcuts (9 Built-In Looks)
+## 3. Lean Skill Structure (`Skill/`)
 
-Drop any `@style` tag into your prompt:
-- **`@awaken`** *(Default)* — Warm twilight indigo + sunset peach/amber rim light (Kurzgesagt / Awaken curiosity vibe)
-- **`@daylight`** — Bright sky, crisp cream, high-key comedy & everyday slice-of-life
-- **`@cinema`** — Storybook slate-navy & warm ember gold for narrative drama
-- **`@noir`** — High-contrast midnight shadows & silver rim light for mystery / suspense / horror
-- **`@arctic`** — Deep glacial navy & glowing ice-cyan for physics, coding, AI, medicine
-- **`@emerald`** — Bioluminescent forest-mint & gold for biology, nature, climate
-- **`@ember`** — Volcanic crimson, copper & sparks for extreme physics, space, action
-- **`@sakura`** — Dusk plum & soft rose-peach haze for memory, romance, reflective essays
-- **`@retro`** — Vintage teal, mustard & risograph print grain for history & psychology
-
----
-
-### D. Thumbnail & Workflow Shortcuts
-
-| Shortcut | What Happens |
-|----------|--------------|
-| **`@thumb`** *(on by default!)* | Exports a hero reference frame (`exports/thumbnail_ref.png`) + style-locked `MC v2` prompt (`production/thumbnail_prompt.md`), calls **your agent's AI image generator** for high-res art, and stamps crisp `<2 MB` YouTube-ready typography (`exports/thumbnail.png` & `.jpg`)! |
-| **`@thumb:code`** | Generates the thumbnail purely from the Canvas hero frame + contrast boost + bold hook text (no AI image call). |
-| **`@no-thumb`** | Skips thumbnail generation. |
-| **`@pause`** | Stops after writing the script + rendering a **9-style comparison grid (`exports/styles.png`)** so you can pick your favorite style/script before the full MP4 render! |
-
----
-
-## 3. Copy-Paste Example Prompts
-
-- **⭐ Flagship House Style (Exact *"Why You Never Touch Anything"* Recipe!):**
-  > `[SIGNATURE] Make a 65s video about why time actually runs slightly slower at your feet than at your head.`
-  >
-  > `[SIGNATURE] Make a 60s video about why mirrors don't actually flip left and right—they flip front and back.`
-  >
-  > `[SIGNATURE] Make a 65s video about why there is no such thing as the color pink in the rainbow.`
-
-- **Classic Single-Voice Explainer (`Brian` voice + AI Thumbnail):**
-  > `[EXPLAINER] @awaken @thumb Make a 60s video about why airplanes don't flap their wings.`
-
-- **Female-Narrated Science Video (`Kokoro af_heart`):**
-  > `[EXPLAINER] @arctic @voice:female Make a 50s video on how noise-canceling headphones erase sound using destructive interference.`
-
-- **Immersive 2nd-Person Mystery (Auto-cast deep narrator, no UI clutter):**
-  > `[2ND-PERSON] @noir @voice:auto Make a 1-minute story: You wake up on a night train where every passenger is frozen mid-sentence except you.`
-
-- **Two-Character Comedy / Skit (`Brian` + `af_heart`):**
-  > `[DIALOGUE] @daylight @voice:pair Make a 55s comedy where a skeptical friend tries to prove gravity is optional.`
-
-- **Fast Vertical Short / Reel (`9:16`):**
-  > `[SHORT] @ember @voice:auto Make a 35s vertical short about what happens in the first millisecond of a supernova.`
-
-- **Animate Your Own Uploaded Voiceover:**
-  > `[MY-VO] @cinema Animate ./my_recording.mp3 into a 16:9 story video and generate a matching @thumb.`
-
-- **Preview Styles Before Committing to Full Render:**
-  > `[STORY] @pause @voice:auto Plan a 60s fable about the last lighthouse keeper and show me the 9-style preview sheet first.`
-
----
-
-## 4. Pro Tips for Diverse Videos
-
-1. **Mix & Match Both Aspect Ratios From One Build:** Once a project is built in `projects/<name>`, ask your agent: *"Also render a `9:16` vertical cut of this project"* — every scene uses `V(landscape, vertical)` coordinates so it reflows cleanly to `1080×1920` without rewriting the film!
-2. **Keep a Consistent Channel Identity — or Switch Per Series:** Leave voice untouched for a signature `Brian` (`edge-tts`) explainer channel, use `@voice:female` for a signature `af_heart` (`Kokoro`) channel, and use `@voice:auto` whenever making multi-character stories so every character gets their own distinct voice.
-3. **AI Thumbnail + Typo-Free Hook Text:** AI image models sometimes misspell small words. Tell your agent `--hook "ZERO TOUCHES?"` (2–4 punchy words): `thumbnail.py` tells the AI model to leave clean negative space on the left third, then stamps razor-sharp, outlined YouTube text under `2 MB`!
-4. **Watch Interactively While Editing:** Ask your agent to run `node Skill/kit/serve.mjs --project projects/<name>` to open the browser **Screening Room** + **Interactive Canvas Studio** where you can scrub frame-by-frame and toggle styles live.
+- `Skill/SKILL.md` — Focused 7-gate Awaken director specification (`~90` lines)
+- `Skill/references/` — **4 tight manuals** (`awaken-direction.md`, `engine-and-rig.md`, `voice-and-sound.md`, `qa-and-thumbnail.md`)
+- `Skill/kit/engine/` — `MC v2` 2D/3D rig (`rig2d.js`, `three-kit.js`), `core.js`, `styles.js`, `fx2d.js`, `ui2d.js`, `compositor.js`
+- `Skill/kit/audio/` — `tts.py` (`Brian` + `af_heart` + sparse-voice check), `music.py`, `sfx.py` (`35+` Foley cues), `mix.py` (two-pass `-14/-16 LUFS` + `speech_ratio`)
+- `Skill/kit/tools/` — `new_project.py`, `plan_timeline.py`, `export_srt.py`, `thumbnail.py`, `qa.py`, `doctor.py`, `verify_kit.py`
+- `Skill/kit/{render.mjs,serve.mjs,player.html}` — Lossless RGBA -> FFmpeg renderer & HTTP `206` live Screening Room
 
 ---
 

@@ -313,6 +313,15 @@ def main():
         if loudness["true_peak_dbtp"] > -0.5:
             warnings.append(f"True peak {loudness['true_peak_dbtp']:.1f} dBTP exceeds -0.5 dBTP ceiling")
 
+    mix_stats = load_json(proj / "build/mix_stats.json", {})
+    speech_ratio = mix_stats.get("speech_ratio")
+    max_speech_ratio = float(cfg.get("maxSpeechRatio", 0.45))
+    if speech_ratio is not None and float(speech_ratio) > max_speech_ratio:
+        warnings.append(
+            f"Speech occupies {float(speech_ratio)*100:.0f}% of runtime (>{max_speech_ratio*100:.0f}% Awaken sparse-voice ceiling) — "
+            "trim unnecessary narration so visual acting, Foley, and music can breathe"
+        )
+
     status = "fail" if errors else ("warn" if warnings else "pass")
     report = {
         "status": status,
@@ -324,6 +333,7 @@ def main():
         "duration_sec": round(vid_dur, 3),
         "expected_duration_sec": round(expected_dur, 3),
         "has_audio": has_audio,
+        "speech_ratio": speech_ratio,
         "loudness": loudness,
         "flash_screening": {
             "events": flash_warnings,
