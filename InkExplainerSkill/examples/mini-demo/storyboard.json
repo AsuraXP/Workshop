@@ -1,0 +1,10 @@
+{
+  "title": "Nightfall — code-only panel sample",
+  "duration_sec": 6,
+  "word_count": 6,
+  "shots": [
+    {"id": 1, "start": 0, "end": 2, "spoken_text": "At sunset, the valley glows.", "word_ids": [1, 2], "camera": "wide establishing", "composition": "figure left, low horizon, sun right", "visual": "A lone white-head figure watches the orange sun lower behind a flat ridge.", "scene": "sunset"},
+    {"id": 2, "start": 2, "end": 4, "spoken_text": "Then the darkness arrives.", "word_ids": [3, 4], "camera": "medium close-up", "composition": "face centered, dark ridge crossing lower third", "visual": "The white face and worried eyes stand out against a deep-blue night valley.", "scene": "night"},
+    {"id": 3, "start": 4, "end": 6, "spoken_text": "A small fire changes everything.", "word_ids": [5, 6], "camera": "low wide two-shot", "composition": "fire foreground center, two figures framing it", "visual": "Two figures sit beside a bright flat-colored fire, now visible in the dark.", "scene": "fire"}
+  ]
+}

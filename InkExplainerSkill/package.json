@@ -1,0 +1,17 @@
+{
+  "name": "ink-explainer-code-film-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Independent code-first flat 2D narrated explainer video toolkit.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "render": "node kit/render.mjs",
+    "test": "node --test tests/scene-kit.test.mjs"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.100"
+  }
+}

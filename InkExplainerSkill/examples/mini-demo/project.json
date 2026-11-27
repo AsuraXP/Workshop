@@ -1,0 +1,11 @@
+{
+  "title": "Nightfall — code-only panel sample",
+  "width": 1920,
+  "height": 1080,
+  "fps": 24,
+  "duration_sec": 6,
+  "voice": "en-US-BrianMultilingualNeural",
+  "audio_mix": "audio/mix.wav",
+  "output": "exports/mini-demo.mp4",
+  "contact_sheet": "exports/mini-demo-contact-sheet.png"
+}
