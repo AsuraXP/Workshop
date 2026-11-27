@@ -4,7 +4,8 @@ import json, os, re, shutil, subprocess, sys, tempfile, time, unittest, urllib.r
 from pathlib import Path
 
 STUDIO_ROOT = Path(__file__).resolve().parent.parent
-KIT = STUDIO_ROOT / "skills/make-film/kit"
+SKILL_DIR = STUDIO_ROOT / "Skill"
+KIT = SKILL_DIR / "kit"
 PY = sys.executable
 
 
@@ -27,15 +28,13 @@ class CodeFilmStudioTests(unittest.TestCase):
         expected_styles = {"awaken", "daylight", "cinema", "noir", "emerald", "ember", "arctic", "sakura", "retro"}
         self.assertEqual(style_ids, expected_styles)
 
-        skills = ["make-film", "new-video", "video-styles", "video-sound", "render-video"]
-        for sk in skills:
-            sk_md = STUDIO_ROOT / "skills" / sk / "SKILL.md"
-            self.assertTrue(sk_md.exists(), f"Missing {sk_md}")
-            txt = sk_md.read_text("utf-8")
-            # Zero leftover stale style names from legacy GrowKaz (neon/paper/dusk) or CairoSVG studio imports
-            self.assertNotIn("cairosvg", txt.lower())
-            self.assertNotIn("--style neon", txt)
-            self.assertNotIn("--style paper", txt)
+        sk_md = SKILL_DIR / "SKILL.md"
+        self.assertTrue(sk_md.exists(), f"Missing {sk_md}")
+        txt = sk_md.read_text("utf-8")
+        # Zero leftover stale style names from legacy GrowKaz (neon/paper/dusk) or CairoSVG studio imports
+        self.assertNotIn("cairosvg", txt.lower())
+        self.assertNotIn("--style neon", txt)
+        self.assertNotIn("--style paper", txt)
 
     def test_02_new_project_and_plan_timeline_modes(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -129,16 +128,15 @@ class CodeFilmStudioTests(unittest.TestCase):
             self.assertEqual(rep2["status"], "warn")
             self.assertTrue(any("s06: unintended static freeze" in w for w in rep2["warnings"]))
 
-    def test_04_plugin_archive_valid(self):
-        plugin_file = STUDIO_ROOT.parent / "code-film-studio.plugin"
-        self.assertTrue(plugin_file.exists(), "code-film-studio.plugin must exist at repo root")
-        with zipfile.ZipFile(plugin_file, "r") as zf:
+    def test_04_skill_archive_valid(self):
+        skill_zip = STUDIO_ROOT / "Skill.zip"
+        self.assertTrue(skill_zip.exists(), "Skill.zip must exist at repo root")
+        with zipfile.ZipFile(skill_zip, "r") as zf:
             names = set(zf.namelist())
-            self.assertIn(".claude-plugin/plugin.json", names)
-            self.assertIn("skills/make-film/SKILL.md", names)
-            self.assertIn("skills/make-film/kit/serve.mjs", names)
-            self.assertIn("skills/make-film/kit/engine/rig2d.js", names)
-            self.assertIn("skills/make-film/kit/tools/qa.py", names)
+            self.assertIn("Skill/SKILL.md", names)
+            self.assertIn("Skill/kit/serve.mjs", names)
+            self.assertIn("Skill/kit/engine/rig2d.js", names)
+            self.assertIn("Skill/kit/tools/qa.py", names)
 
 
 if __name__ == "__main__":

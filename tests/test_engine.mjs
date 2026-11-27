@@ -6,7 +6,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire, register } from 'node:module';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const KIT = path.resolve(HERE, '../skills/make-film/kit');
+const KIT = path.resolve(HERE, '../Skill/kit');
 const require = createRequire(import.meta.url);
 
 // Register /kit/* resolver identical to render.mjs
