@@ -1,0 +1,11 @@
+{
+  "duration": 18.0,
+  "sentences": [
+    { "start": 0.25, "end": 2.9,  "speaker": "",       "text": "Eight billion people. One countdown." },
+    { "start": 3.4,  "end": 5.7,  "speaker": "Friend", "text": "Wait... do we knock Earth out of orbit?" },
+    { "start": 6.2,  "end": 8.7,  "speaker": "",       "text": "Earth outweighs us by a trillion to one." },
+    { "start": 9.2,  "end": 11.9, "speaker": "",       "text": "Landing together releases two trillion joules." },
+    { "start": 12.4, "end": 14.9, "speaker": "",       "text": "Loud as thunder—yet barely a magnitude 4 tremor." },
+    { "start": 15.4, "end": 17.6, "speaker": "",       "text": "Earth keeps right on spinning." }
+  ]
+}

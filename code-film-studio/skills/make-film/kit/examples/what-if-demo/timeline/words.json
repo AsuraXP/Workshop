@@ -1,0 +1,19 @@
+{
+  "duration": 18.0,
+  "source": "planned",
+  "words": [
+    { "word": "Eight", "start": 0.25, "end": 0.65 },
+    { "word": "billion", "start": 0.68, "end": 1.15 },
+    { "word": "people.", "start": 1.18, "end": 1.72 },
+    { "word": "One", "start": 1.85, "end": 2.20 },
+    { "word": "countdown.", "start": 2.24, "end": 2.90 },
+    { "word": "Wait...", "start": 3.40, "end": 3.95 },
+    { "word": "do", "start": 4.00, "end": 4.22 },
+    { "word": "we", "start": 4.25, "end": 4.45 },
+    { "word": "knock", "start": 4.48, "end": 4.82 },
+    { "word": "Earth", "start": 4.85, "end": 5.18 },
+    { "word": "out", "start": 5.20, "end": 5.38 },
+    { "word": "of", "start": 5.40, "end": 5.52 },
+    { "word": "orbit?", "start": 5.54, "end": 5.75 }
+  ]
+}

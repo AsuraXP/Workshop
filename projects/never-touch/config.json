@@ -1,0 +1,24 @@
+{
+  "title": "Why You Never Actually Touch Anything",
+  "aspect": "16:9",
+  "width": 1920,
+  "verticalWidth": 1080,
+  "fps": 24,
+  "duration": 66.0,
+  "style": "awaken",
+  "voiceover": null,
+  "captions": false,
+  "storyCaptions": true,
+  "bars": "none",
+  "music": {
+    "sections": [
+      { "at": 0.0,  "mood": "curious", "gain": -15 },
+      { "at": 20.3, "mood": "wonder",  "gain": -15 },
+      { "at": 29.5, "mood": "playful", "gain": -15 },
+      { "at": 34.1, "mood": "tense",   "gain": -15 },
+      { "at": 49.3, "mood": "uplift",  "gain": -14 },
+      { "at": 61.5, "mood": "wonder",  "gain": -14 }
+    ]
+  },
+  "loudness": -14.0
+}

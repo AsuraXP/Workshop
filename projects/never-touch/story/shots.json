@@ -1,0 +1,230 @@
+{
+  "shots": [
+    {
+      "id": "s01",
+      "start": 0.0,
+      "dur": 4.1,
+      "in": "fadeBlack",
+      "location": "studyRoom",
+      "summary": "Warm study room — Milo lifts a steaming ceramic mug while Nora reads across the oak table.",
+      "subtitles": [
+        { "at": 0.25, "end": 4.0, "text": "Right now, you feel the chair beneath you, or the mug in your hand." }
+      ],
+      "dialogue": [
+        { "at": 0.25, "src": "audio/lines/s01.mp3", "gain": 0 }
+      ],
+      "ambience": { "kind": "roomtone", "gain": -25 },
+      "sfx": [
+        { "at": 1.1, "kind": "swish", "gain": -14 }
+      ]
+    },
+    {
+      "id": "s02",
+      "start": 4.1,
+      "dur": 5.6,
+      "in": "cut",
+      "location": "studyRoom",
+      "summary": "Closer on Milo holding the mug as the lifetime touch counter drops cleanly to zero.",
+      "subtitles": [
+        { "at": 0.23, "end": 5.15, "text": "Except according to physics, you have never actually touched anything in your entire life." }
+      ],
+      "ambience": { "kind": "roomtone", "gain": -25 },
+      "sfx": [
+        { "at": 0.55, "kind": "blip", "gain": -11 },
+        { "at": 2.35, "kind": "ding", "gain": -12 }
+      ]
+    },
+    {
+      "id": "s03",
+      "start": 9.7,
+      "dur": 3.5,
+      "in": "cut",
+      "location": "studyRoom",
+      "summary": "Nora leans forward skeptically and pokes the oak tabletop three times.",
+      "subtitles": [
+        { "at": 0.15, "end": 3.25, "speaker": "Nora", "text": "Hold on. I am literally poking this table right now." }
+      ],
+      "dialogue": [
+        { "at": 0.15, "src": "audio/lines/s02.mp3", "gain": 0, "pan": 0.12 }
+      ],
+      "ambience": { "kind": "roomtone", "gain": -26 },
+      "sfx": [
+        { "at": 1.45, "kind": "pop", "gain": -10, "pan": 0.1 },
+        { "at": 1.95, "kind": "pop", "gain": -10, "pan": 0.1 },
+        { "at": 2.45, "kind": "pop", "gain": -9,  "pan": 0.1 }
+      ]
+    },
+    {
+      "id": "s04",
+      "start": 13.2,
+      "dur": 7.1,
+      "in": "cut",
+      "location": "macroGap",
+      "summary": "Ten-million-times zoom from Nora's fingertip into the glowing sub-nanometer gap above wood atoms.",
+      "subtitles": [
+        { "at": 0.15, "end": 6.7, "text": "Zoom in ten million times, and your fingertip stops hovering a fraction of a nanometer above the wood." }
+      ],
+      "dialogue": [
+        { "at": 0.15, "src": "audio/lines/s03.mp3", "gain": 0 }
+      ],
+      "ambience": { "kind": "hum", "gain": -25 },
+      "sfx": [
+        { "at": 0.2,  "kind": "slowmo", "dur": 1.9, "gain": -11 },
+        { "at": 2.45, "kind": "ding",   "gain": -12 }
+      ]
+    },
+    {
+      "id": "s05",
+      "start": 20.3,
+      "dur": 3.6,
+      "in": "dissolve",
+      "inDur": 0.35,
+      "location": "blueprint",
+      "summary": "Blueprint schematic of an atom wrapped in pulsing negatively charged electron shells.",
+      "subtitles": [
+        { "at": 0.15, "end": 3.45, "text": "Every atom is wrapped in negatively charged electrons." }
+      ],
+      "dialogue": [
+        { "at": 0.15, "src": "audio/lines/s04.mp3", "gain": 0 }
+      ],
+      "ambience": { "kind": "hum", "gain": -26 },
+      "sfx": [
+        { "at": 0.3, "kind": "blip", "gain": -12 },
+        { "at": 1.2, "kind": "shimmer", "dur": 1.8, "gain": -14 }
+      ]
+    },
+    {
+      "id": "s06",
+      "start": 23.9,
+      "dur": 5.6,
+      "in": "cut",
+      "location": "blueprint",
+      "summary": "Two electron clouds press together and repel violently like invisible magnets as the force meter spikes.",
+      "subtitles": [
+        { "at": 0.17, "end": 5.35, "text": "Push yours toward the table, and those clouds repel each other like invisible magnets." }
+      ],
+      "ambience": { "kind": "hum", "gain": -25 },
+      "sfx": [
+        { "at": 0.5, "kind": "riser", "dur": 1.8, "gain": -12 },
+        { "at": 2.3, "kind": "whoosh", "gain": -9 }
+      ]
+    },
+    {
+      "id": "s07",
+      "start": 29.5,
+      "dur": 4.6,
+      "in": "cut",
+      "location": "parkBench",
+      "summary": "Bright park bench — Nora celebrates levitating 0.2 nm above the bench as Milo high-fives her with a tiny spark.",
+      "subtitles": [
+        { "at": 0.15, "end": 4.2, "speaker": "Nora", "text": "So technically, I am levitating right now. Honestly, pretty impressive." }
+      ],
+      "dialogue": [
+        { "at": 0.15, "src": "audio/lines/s05.mp3", "gain": 0, "pan": 0.12 }
+      ],
+      "ambience": { "kind": "wind", "gain": -25 },
+      "sfx": [
+        { "at": 0.4, "kind": "footstep", "gain": -13, "pan": -0.2 },
+        { "at": 0.9, "kind": "footstep", "gain": -13, "pan": -0.1 },
+        { "at": 2.15, "kind": "flash", "gain": -11 }
+      ]
+    },
+    {
+      "id": "s08",
+      "start": 34.1,
+      "dur": 8.0,
+      "in": "cut",
+      "location": "nerveStage",
+      "summary": "Forcefield indents skin and fires golden sensory nerve impulses up Milo's arm to his awe-struck face.",
+      "subtitles": [
+        { "at": 0.15, "end": 7.6, "text": "What your nerves call solid is really that electromagnetic forcefield pressing your skin back before a single atom ever collides." }
+      ],
+      "dialogue": [
+        { "at": 0.15, "src": "audio/lines/s06.mp3", "gain": 0 }
+      ],
+      "ambience": { "kind": "hum", "gain": -26 },
+      "sfx": [
+        { "at": 1.6, "kind": "shimmer", "dur": 2.2, "gain": -12 },
+        { "at": 4.2, "kind": "ding", "gain": -12 }
+      ]
+    },
+    {
+      "id": "s09",
+      "start": 42.1,
+      "dur": 7.2,
+      "in": "cut",
+      "location": "fusionLab",
+      "summary": "High-contrast collider diagram forces two nuclei to actually touch — triggering a golden nuclear fusion wave.",
+      "subtitles": [
+        { "at": 0.15, "end": 6.75, "text": "Which is very good news, because forcing two atomic nuclei to actually touch is called nuclear fusion." }
+      ],
+      "dialogue": [
+        { "at": 0.15, "src": "audio/lines/s07.mp3", "gain": 0 }
+      ],
+      "ambience": { "kind": "hum", "gain": -24 },
+      "sfx": [
+        { "at": 3.1,  "kind": "riser",  "dur": 2.0, "gain": -10 },
+        { "at": 5.17, "kind": "impact", "gain": -5 }
+      ]
+    },
+    {
+      "id": "s10",
+      "start": 49.3,
+      "dur": 3.7,
+      "in": "cut",
+      "location": "fusionLab",
+      "summary": "Close-up on Nora slowly pulling her hand back from the console in polite relief.",
+      "subtitles": [
+        { "at": 0.15, "end": 3.35, "speaker": "Nora", "text": "Okay, hovering is great. Suddenly a huge fan of the gap." }
+      ],
+      "dialogue": [
+        { "at": 0.15, "src": "audio/lines/s08.mp3", "gain": 0, "pan": 0.08 }
+      ],
+      "ambience": { "kind": "roomtone", "gain": -26 },
+      "sfx": [
+        { "at": 0.55, "kind": "swish", "gain": -12 }
+      ]
+    },
+    {
+      "id": "s11",
+      "start": 53.0,
+      "dur": 8.5,
+      "in": "dissolve",
+      "inDur": 0.45,
+      "location": "twilightBalcony",
+      "summary": "Scenic twilight overlook balcony — Milo and Nora clink warm mugs and shake hands across the glowing microscopic bridge.",
+      "subtitles": [
+        { "at": 0.15, "end": 8.05, "text": "Yet across that tiny gulf, those invisible forces still carry warmth, weight, and every handshake you have ever felt." }
+      ],
+      "dialogue": [
+        { "at": 0.15, "src": "audio/lines/s09.mp3", "gain": 0 }
+      ],
+      "ambience": { "kind": "night", "gain": -25 },
+      "sfx": [
+        { "at": 3.35, "kind": "ding", "gain": -11 },
+        { "at": 6.10, "kind": "shimmer", "dur": 1.8, "gain": -14 }
+      ]
+    },
+    {
+      "id": "s12",
+      "start": 61.5,
+      "dur": 4.5,
+      "in": "dissolve",
+      "inDur": 0.45,
+      "out": "fadeBlack",
+      "hold": true,
+      "location": "twilightBalcony",
+      "summary": "Serene twilight horizon hold over the valley lights as the closing thought settles.",
+      "subtitles": [
+        { "at": 0.15, "end": 3.65, "text": "Close enough to feel everything, without ever colliding." }
+      ],
+      "dialogue": [
+        { "at": 0.15, "src": "audio/lines/s10.mp3", "gain": 0 }
+      ],
+      "ambience": { "kind": "night", "gain": -25 },
+      "sfx": [
+        { "at": 0.35, "kind": "ding", "gain": -14 }
+      ]
+    }
+  ]
+}

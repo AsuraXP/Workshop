@@ -1,0 +1,21 @@
+{
+  "title": "What If Everyone Jumped at Once?",
+  "aspect": "16:9",
+  "width": 1920,
+  "verticalWidth": 1080,
+  "fps": 24,
+  "duration": 18.0,
+  "style": "awaken",
+  "voiceover": null,
+  "captions": false,
+  "storyCaptions": true,
+  "bars": "none",
+  "music": {
+    "sections": [
+      { "at": 0.0, "mood": "curious", "gain": -15 },
+      { "at": 9.0, "mood": "action",  "gain": -14 },
+      { "at": 14.5,"mood": "wonder",  "gain": -15 }
+    ]
+  },
+  "loudness": -14.0
+}
