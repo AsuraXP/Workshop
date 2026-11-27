@@ -135,8 +135,65 @@ class CodeFilmStudioTests(unittest.TestCase):
             names = set(zf.namelist())
             self.assertIn("Skill/SKILL.md", names)
             self.assertIn("Skill/kit/serve.mjs", names)
+            self.assertIn("Skill/kit/audio/tts.py", names)
+            self.assertIn("Skill/kit/tools/thumbnail.py", names)
+            self.assertIn("Skill/references/voice-and-thumbnail.md", names)
             self.assertIn("Skill/kit/engine/rig2d.js", names)
             self.assertIn("Skill/kit/tools/qa.py", names)
+
+    def test_05_tts_roster_and_thumbnail_pipeline(self):
+        # 1. Verify dual-engine voice roster (Brian via edge-tts + af_heart via Kokoro)
+        voices_out = run_cmd([PY, str(KIT / "audio/tts.py"), "--list-voices"]).stdout
+        self.assertIn("en-US-BrianMultilingualNeural", voices_out)
+        self.assertIn("af_heart", voices_out)
+
+        # 2. Verify speech-bound & internal breath-pause analyzer on a synthetic two-clause WAV
+        import numpy as np
+        sys.path.insert(0, str(KIT / "audio"))
+        from dsp import write_wav
+        from tts import analyze_speech_bounds, resolve_voice_spec
+
+        self.assertEqual(resolve_voice_spec("default")["voice_id"], "en-US-BrianMultilingualNeural")
+        self.assertEqual(resolve_voice_spec("female")["voice_id"], "af_heart")
+        self.assertEqual(resolve_voice_spec("auto", gender_hint="female")["engine"], "kokoro")
+        self.assertEqual(resolve_voice_spec("auto", gender_hint="male")["engine"], "edge")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            wav_p = Path(tmp) / "two_clause.wav"
+            sr = 48000
+            t1 = np.sin(2 * np.pi * 220 * np.linspace(0, 0.6, int(0.6 * sr), dtype=np.float32)) * 0.3
+            sil_lead = np.zeros(int(0.15 * sr), dtype=np.float32)
+            sil_mid = np.zeros(int(0.35 * sr), dtype=np.float32)
+            sil_tail = np.zeros(int(0.20 * sr), dtype=np.float32)
+            mono = np.concatenate([sil_lead, t1, sil_mid, t1, sil_tail])
+            write_wav(wav_p, np.column_stack([mono, mono]))
+            bounds = analyze_speech_bounds(wav_p)
+            self.assertAlmostEqual(bounds["speech_start"], 0.15, delta=0.03)
+            self.assertEqual(len(bounds["pauses"]), 1)
+            self.assertAlmostEqual(bounds["pauses"][0][0], 0.75, delta=0.03)
+            self.assertAlmostEqual(bounds["pauses"][0][1], 1.10, delta=0.03)
+
+            # 3. Verify thumbnail pipeline (--mode prompt & --mode code)
+            demo = Path(tmp) / "thumb_demo"
+            shutil.copytree(KIT / "examples/what-if-demo", demo)
+            p_res = run_cmd([PY, str(KIT / "tools/thumbnail.py"), "--project", str(demo), "--mode", "prompt", "--hook", "WHAT IF?"])
+            self.assertIn("MC v2", p_res.stdout)
+            self.assertTrue((demo / "exports/thumbnail_ref.png").exists())
+            self.assertTrue((demo / "production/thumbnail_prompt.md").exists())
+
+            run_cmd([PY, str(KIT / "tools/thumbnail.py"), "--project", str(demo), "--mode", "code", "--hook", "WHAT IF?", "--badge", "SHORT FILM"])
+            thumb_png = demo / "exports/thumbnail.png"
+            thumb_jpg = demo / "exports/thumbnail.jpg"
+            self.assertTrue(thumb_png.exists())
+            self.assertTrue(thumb_jpg.exists())
+            self.assertLess(thumb_jpg.stat().st_size, 2_000_000)
+
+        # 4. Verify README.md & Skill/SKILL.md document all shortcut tags
+        readme = (STUDIO_ROOT / "README.md").read_text("utf-8")
+        skill_doc = (SKILL_DIR / "SKILL.md").read_text("utf-8")
+        for tag in ("[EXPLAINER]", "[2ND-PERSON]", "[STORY]", "[DIALOGUE]", "[MY-VO]", "[SHORT]", "[SILENT]", "@voice:auto", "@thumb"):
+            self.assertIn(tag, readme)
+            self.assertIn(tag, skill_doc)
 
 
 if __name__ == "__main__":

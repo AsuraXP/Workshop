@@ -41,12 +41,20 @@ Code Film Studio supports **two** rendering backends in `kit/render.mjs`:
   ```
   `render.mjs` automatically falls back to `@napi-rs/canvas` when Chromium is unavailable (or when `--backend node` is passed) and renders 2D films at `25–40+ fps`!
 
-### Optional Enhancements
-- **Voiceover Word-Timestamp Alignment (`tools/transcribe.py`):**
+### Optional Speech & Vision Packages
+- **Built-In Dual-Engine Speech Synthesis (`audio/tts.py`):**
+  ```bash
+  # Primary Male Engine (en-US-BrianMultilingualNeural + male cast):
+  pip install edge-tts
+
+  # Primary Female Engine (af_heart + female cast):
+  pip install kokoro soundfile
+  # (Or lightweight CPU ONNX runtime: pip install kokoro-onnx soundfile)
+  ```
+- **Uploaded Voiceover Word-Timestamp Alignment (`tools/transcribe.py`):**
   ```bash
   pip install faster-whisper
   ```
-  *(Runs locally on CPU/GPU with `int8` quantization; not needed when using `parse_script.py` or `plan_timeline.py`.)*
 - **Faster Video Frame Decoding in `tools/qa.py`:**
   ```bash
   pip install opencv-python-headless
