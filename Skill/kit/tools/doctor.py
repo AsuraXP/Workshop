@@ -44,7 +44,8 @@ for mod, pip_name, required in [
     ("scipy", "scipy", True),
     ("PIL", "pillow", True),
     ("cv2", "opencv-python-headless (optional, faster qa.py decode)", False),
-    ("faster_whisper", "faster-whisper (optional, for voiceover word alignment)", False),
+    ("edge_tts", "edge-tts (primary male TTS engine -> en-US-BrianMultilingualNeural)", False),
+    ("faster_whisper", "faster-whisper (optional, for uploaded voiceover alignment)", False),
 ]:
     try:
         __import__(mod)
@@ -52,6 +53,18 @@ for mod, pip_name, required in [
     except ImportError:
         line(FAIL if required else WARN, f"python:{mod} -> pip install {pip_name.split()[0]}")
         bad |= required
+
+has_kokoro = False
+for kmod in ("kokoro", "kokoro_onnx"):
+    try:
+        __import__(kmod)
+        line(OK, f"python:{kmod} (primary female TTS engine -> af_heart)")
+        has_kokoro = True
+        break
+    except ImportError:
+        pass
+if not has_kokoro:
+    line(WARN, "python:kokoro -> pip install kokoro soundfile (or kokoro-onnx soundfile)")
 
 # 3. Node rendering backends (Playwright Chromium for 2D+3D, or @napi-rs/canvas for 2D headless)
 nm = KIT / "node_modules"
