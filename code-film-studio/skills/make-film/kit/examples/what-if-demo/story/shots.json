@@ -1,0 +1,90 @@
+{
+  "shots": [
+    {
+      "id": "s01",
+      "start": 0.0,
+      "dur": 3.2,
+      "in": "fadeBlack",
+      "location": "plaza",
+      "summary": "Wide twilight plaza — host and friend wonder what happens if 8 billion people jump together.",
+      "caption": "Eight billion people. One countdown.",
+      "ambience": { "kind": "wind", "gain": -26 },
+      "sfx": [
+        { "at": 0.2, "kind": "whoosh_soft", "gain": -12 }
+      ]
+    },
+    {
+      "id": "s02",
+      "start": 3.2,
+      "dur": 2.8,
+      "in": "cut",
+      "location": "plaza",
+      "summary": "Close-up reaction — friend raises a skeptical brow.",
+      "speaker": "Friend",
+      "caption": "Wait... do we knock Earth out of orbit?",
+      "ambience": { "kind": "wind", "gain": -28 },
+      "sfx": [
+        { "at": 0.25, "kind": "pop", "gain": -12 }
+      ]
+    },
+    {
+      "id": "s03",
+      "start": 6.0,
+      "dur": 3.0,
+      "in": "cut",
+      "location": "interiorLab",
+      "summary": "Scientist in tiled lab holds seismometer locked to handPos() and checks orbital momentum.",
+      "caption": "Earth outweighs us by a trillion to one.",
+      "ambience": { "kind": "room", "gain": -26 },
+      "sfx": [
+        { "at": 0.4, "kind": "tick", "gain": -11 },
+        { "at": 1.4, "kind": "chime", "gain": -12 }
+      ]
+    },
+    {
+      "id": "s04",
+      "start": 9.0,
+      "dur": 3.2,
+      "in": "cut",
+      "location": "plaza",
+      "summary": "Synchronized crowd crouch -> jump -> landing shockwave with live joule counter.",
+      "caption": "Landing together releases two trillion joules.",
+      "ambience": { "kind": "crowd", "gain": -24 },
+      "sfx": [
+        { "at": 0.55, "kind": "riser", "dur": 0.8, "gain": -10 },
+        { "at": 1.45, "kind": "boom", "gain": -5 },
+        { "at": 1.50, "kind": "thud", "gain": -6 }
+      ]
+    },
+    {
+      "id": "s05",
+      "start": 12.2,
+      "dur": 3.0,
+      "in": "dissolve",
+      "inDur": 0.35,
+      "location": "blueprint",
+      "summary": "Blueprint energy comparison — loud local tremor, zero orbital shift.",
+      "caption": "Loud as thunder—yet barely a magnitude 4 tremor.",
+      "ambience": { "kind": "hum", "gain": -27 },
+      "sfx": [
+        { "at": 0.2, "kind": "slide", "gain": -12 },
+        { "at": 0.9, "kind": "ping", "gain": -11 }
+      ]
+    },
+    {
+      "id": "s06",
+      "start": 15.2,
+      "dur": 2.8,
+      "in": "dissolve",
+      "inDur": 0.4,
+      "out": "fadeBlack",
+      "hold": true,
+      "location": "plaza",
+      "summary": "Deliberate calm twilight hold on the plaza as the planet keeps spinning.",
+      "ambience": { "kind": "night", "gain": -25 },
+      "sfx": [
+        { "at": 0.3, "kind": "ding", "gain": -13 }
+      ]
+    }
+  ]
+}

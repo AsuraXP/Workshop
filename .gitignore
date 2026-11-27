@@ -1,0 +1,12 @@
+# Node & Python transient artifacts
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Rendered heavy media artifacts (reproducible via mix.py + render.mjs + qa.py)
+*.mp4
+**/build/*.wav
+**/out/
+**/qa/*.jpg
+**/qa/report.json

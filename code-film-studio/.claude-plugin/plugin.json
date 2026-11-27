@@ -1,0 +1,21 @@
+{
+  "name": "code-film-studio",
+  "version": "2.1.0",
+  "description": "Universal code-only 2D/2.5D/3D animated film & video studio: autonomous virtual production crew, MC v2 parameterized character rig, Three.js spatial stage, word/script/beat timeline sync, procedural score + 35+ Foley SFX with two-pass loudness mastering, and frame-decoded technical & Critic QA.",
+  "author": {
+    "name": "Workshop Studio"
+  },
+  "keywords": [
+    "animation",
+    "2d",
+    "2.5d",
+    "3d",
+    "film-production",
+    "explainer",
+    "storytelling",
+    "canvas",
+    "threejs",
+    "procedural-audio",
+    "ffmpeg"
+  ]
+}
