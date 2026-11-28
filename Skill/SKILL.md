@@ -1,6 +1,6 @@
 ---
 name: awaken-film-studio
-description: Produce atmospheric Awaken-style 2.5D/3D animated films (16:9 widescreen & 9:16 vertical) + thumbnails from a plain prompt. Visuals, MC v2 character acting, Foley, and swelling score carry 60–70% of the film; sparse natural speech (Brian via edge-tts + af_heart via Kokoro) is used ONLY when necessary (<=40% runtime, <=14 words per cue).
+description: Produce atmospheric Awaken-style 2.5D/3D animated films (16:9 widescreen & 9:16 vertical) + thumbnails from a plain prompt. Visuals, MC v2 character acting, Foley, and score lead; speech stays <=40% runtime and <=14 words per cue. Arena defaults: voice-00 male narrator + voice-01 female co-star; local fallback: Brian/af_heart.
 ---
 
 # Awaken Film Studio — Sparse-Voice Visual Cinema Skill
@@ -19,10 +19,12 @@ Resolve `SKILL_DIR` as the directory containing this `SKILL.md` file (or `${CLAU
    - Inside spoken shots, follow **Visual Setup (`0.8–1.8s` quiet) → Short Line → Visual & Music Payoff (`1.2–2.5s` quiet)**, and keep **`>= 30%` of shots completely wordless**.
 2. **House Character Rig (`MC v2` — `$REFS/engine-and-rig.md`):**
    - Recurring characters always use **`MC v2`** (`drawFigure`, `bigFace`, `handPos`, `COATS` in `/kit/engine/rig2d.js`): matte charcoal circular head with razor crescent rim light, vertical cream oval eyes, expressive pill brow bars, cylindrical-shaded rounded coat/cardigan, thin dark limbs, ball hands, and flat feet.
-3. **Dual Free Voice Engine (`$REFS/voice-and-sound.md`):**
-   - **Main Male:** `edge-tts` → **`en-US-BrianMultilingualNeural`** (`--voice brian`).
-   - **Main Female:** `Kokoro` → **`af_heart`** (`--voice af_heart`).
-   - Default cast pairs off-screen 2nd-person `brian` with wry on-screen co-star `af_heart` + a silent `MC v2` visual protagonist (or use `@voice:male`, `@voice:female`, `@voice:auto` for additional `edge-tts` male / `Kokoro` female characters, or `@silent` for zero speech).
+3. **Voice Defaults — Arena first, local TTS fallback (`$REFS/voice-and-sound.md`):**
+   - **When an Arena agent makes the film:** default the male narrator to the warm, curious `voice-00` profile and the female co-star/female narrator to the dry, comedic `voice-01` profile from *Why You Never Actually Touch Anything*. Use these defaults for both `16:9` and `9:16` Awaken films. This is a voice-profile preference only; do not copy that film's dialogue or story.
+   - If those IDs are registered in the current Arena session, reuse them. Otherwise call Arena `add_voice` for the corresponding male and/or female role, then use the returned session `voice_id` consistently for every cue in that role and record it in the project's audio notes. The historical labels `voice-00` / `voice-01` are not guaranteed to be registered in a new session; never pass an unregistered ID or silently substitute another voice.
+   - Arena agents use Arena voice generation (`generate_speech`) for those roles rather than local `tts.py`. If Arena voice tools are unavailable, ask before falling back.
+   - **Outside Arena:** local `tts.py` defaults remain `edge-tts` → `en-US-BrianMultilingualNeural` (`brian`) for male voices and `Kokoro` → `af_heart` for female voices.
+   - Default two-person cast is the Arena `voice-00` narrator + `voice-01` co-star when produced in Arena; the local fallback pairing is `brian` + `af_heart`, alongside a silent `MC v2` visual protagonist. `@voice:male`, `@voice:female`, `@voice:auto`, and `@silent` continue to select local presets/zero speech when not using Arena voice generation.
 4. **Simple Optional Modifiers (Plain Prompt Works With Zero Tags!):**
    - **Aspect:** `16:9` widescreen default; add `@vertical` (or ask for `9:16`) for `1080×1920` vertical cinema.
    - **World Palette:** `@awaken` *(default twilight)*, `@daylight`, `@cinema`, `@noir`, `@arctic`, `@emerald`, `@ember`, `@sakura`, `@retro`.
@@ -43,11 +45,11 @@ Run all 7 gates end-to-end automatically unless `@pause` was requested. Keep `$K
 3. Write `production/brief.md` and a **sparse** `production/script.md` (`~45–75 words total` per 60s film, marking `[SILENT]` visual beats explicitly).
 
 ### Gate 2 — Audio-First Sparse Voice & Timing (`$REFS/voice-and-sound.md`)
-1. Write `<dir>/audio/cues.json` (`<= 14 words` per cue) and synthesize via:
+1. Write `<dir>/audio/cues.json` (`<= 14 words` per cue). If an Arena agent is producing the film, use the Arena voice defaults above: call `add_voice` only for roles not already registered, then generate each needed cue with `generate_speech` and save it under `<dir>/audio/lines/`; record the returned session IDs in `<dir>/production/audio.md`. Otherwise synthesize with the local fallback:
    ```bash
    python3 "$KIT/audio/tts.py" --project <dir> --cues <dir>/audio/cues.json
    ```
-2. Check `audio/tts_report.json`: if `estimated_speech_ratio > 0.42` or any line triggered `[PACING WARN]`, **trim the lines and re-run `tts.py` now** before building shots. *(For `@silent` films, run `plan_timeline.py --project <dir> --write-shots`.)*
+2. Keep every cue under `14` words and total speech at or below `40%` of runtime. For local TTS, use `audio/tts_report.json`; for Arena-generated clips, measure the actual clip durations and confirm the final `build/mix_stats.json` speech ratio. Trim and regenerate any cue that breaks the limits before building shots. *(For `@silent` films, run `plan_timeline.py --project <dir> --write-shots`.)*
 
 ### Gate 3 — Cast, Multi-Plane Sets & Storyboard (`$REFS/awaken-direction.md`, `$REFS/engine-and-rig.md`)
 1. Define `MC v2` presets in `production/cast.md` + `scenes/cast.js` and 3-plane sets (`0.25` bg, `0.6` mid, `1.0` stage) in `scenes/sets/*.js` + `production/locations.md`.

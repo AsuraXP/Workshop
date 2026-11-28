@@ -105,6 +105,7 @@ Track across every shot cut so props, outfits, screen direction, and lighting ne
 AUDIO_MD = """# Sound & Music Plan
 
 - **Dialogue / Voice Mode:** {audio_mode}
+- **Arena Session Voice IDs (if used):** male narrator `voice-00` profile -> [record current session ID]; female co-star/narrator `voice-01` profile -> [record current session ID or N/A].
 - **Score Mood Arc:** (e.g., `wonder` -> `curious` -> `uplift`, or `none` for stark realism)
 - **Ambience Beds:** Motivated room tone / wind / night / rain per location
 - **Key Foley & Accents:** Footsteps, prop touches, subtle UI ticks, transitions
@@ -149,7 +150,7 @@ def main():
 
     dur = float(args.duration or 60.0)
     mode = "awaken sparse-voice cinema"
-    audio_mode = "Sparse speech (<=40% runtime via tts.py: brian + af_heart) + swelling score + Foley"
+    audio_mode = "Arena default when produced in Arena: voice-00 male narrator + voice-01 female co-star (register/select current-session IDs); non-Arena local fallback: sparse tts.py speech with brian + af_heart; score + Foley"
 
     if args.script:
         sc_src = Path(args.script).resolve()
@@ -213,7 +214,7 @@ def main():
     (proj / "production/qa.md").write_text(QA_MD, "utf-8")
 
     print(f"Created project at {proj} (mode: {mode}, aspect: {args.aspect}, target: {dur:.1f}s)")
-    print("Next: write sparse cues in audio/cues.json -> run audio/tts.py -> build story/shots.json & scenes/")
+    print("Next: write sparse cues. In Arena use the voice-00/voice-01 profiles via host voice tools; outside Arena use audio/tts.py. Then build story/shots.json & scenes/.")
 
 
 if __name__ == "__main__":

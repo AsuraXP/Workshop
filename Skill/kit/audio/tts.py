@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Dual-engine TTS router & speech-timing analyzer for Code Film Studio.
+"""Local dual-engine TTS router & speech-timing analyzer for Code Film Studio.
 
-Primary voice policy:
+This backend is the non-Arena fallback. Arena-produced Awaken films use the
+session-selected voice-00 / voice-01 profiles described in references/voice-and-sound.md.
+
+Local voice policy:
   - Main Male   (default narrator / male lead): edge-tts -> en-US-BrianMultilingualNeural ("brian")
   - Main Female (co-host / female narrator):    Kokoro   -> af_heart ("af_heart")
   - Additional Male roles   (@voice:auto):      curated edge-tts male voices
-  - Additional Female roles (@voice:auto):      curated Kokoro female voices
+  - Additional Female roles (@voice:auto):     curated Kokoro female voices
 
 Supports both single-clip synthesis (--text ... --out ...) and batch cue manifests
 (--cues cues.json or --project <dir>), outputting 48 kHz mono/stereo WAV or MP3 plus

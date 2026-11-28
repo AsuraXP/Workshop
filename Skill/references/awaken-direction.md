@@ -21,13 +21,15 @@ Every film built with this skill follows **one unmistakable creative identity**:
 
 ## 2. Cast & Voice Dynamic
 
-- **Off-Screen Narrator (`edge-tts` → `brian` / `en-US-BrianMultilingualNeural`):**
-  Warm, calm 2nd-person voice (*"Right now, you feel..."*). Drops short, intriguing turns rather than textbook definitions.
-- **On-Screen Witty / Skeptical Co-Star (`Kokoro` → `af_heart`, `MC v2` in `cardigan`):**
-  Steps in `2–3` times per minute with short, human reactions (*"Hold on. I'm poking the table right now."*, *"Okay, suddenly a huge fan of the gap."*) that ground big ideas in physical comedy or wonder.
+- **Arena Agent — Off-Screen Male Narrator (`voice-00` profile):**
+  Use the warm, curious explanatory voice from *Why You Never Actually Touch Anything* for the default narrator in both `16:9` and `9:16` Awaken films. Register/select it in the active session as described in `voice-and-sound.md` when its historical ID is unavailable.
+- **Arena Agent — Female Co-Star / Narrator (`voice-01` profile):**
+  Use the dry, comedic, skeptical Nora voice for the female character or female narration. Keep her brief reactions grounded in physical comedy or wonder; do not reuse the source film's dialogue.
+- **Non-Arena local TTS fallback:**
+  Use `edge-tts` `brian` (`en-US-BrianMultilingualNeural`) for a warm, calm 2nd-person narrator and Kokoro `af_heart` for the witty/skeptical co-star. Keep these as local-backend defaults only; do not silently substitute them in Arena-produced films.
 - **Visual Protagonist (`MC v2` in `COATS.cream`):**
   Silent physical anchor in the world—holding the recurring prop via `handPos()`, testing the environment, reacting in `bigFace` close-ups, and sharing the closing twilight tableau.
-- *(For solo contemplative stories, use just `brian` or `@voice:female` `af_heart` sparsely; for multi-character stories, `@voice:auto` casts additional male voices from `edge-tts` and female voices from `Kokoro`.)*
+- *(For solo contemplative Arena stories, use only `voice-00` if narration is needed; for a female lead or co-star, use `voice-01`. Outside Arena, use just local `brian` or `af_heart` sparsely. Keep the speech limits and dialogue in `voice-and-sound.md`.)*
 
 ---
 

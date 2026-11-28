@@ -2,11 +2,24 @@
 
 In Awaken-style films, **silence, ambience, Foley, and swelling score are the primary soundtrack**—voice is used sparingly (`<= 40%` of runtime, `<= 12–14` words per cue) so it never crowds out visual pacing.
 
+## Arena Agent Voice Defaults — `voice-00` + `voice-01`
+
+When an **Arena agent** produces an Awaken video, use the two voice profiles from `projects/never-touch/production/audio.md` as the defaults, in either landscape or vertical format:
+
+| Arena role | Reference ID | Voice direction | Use |
+|---|---|---|---|
+| Male narrator | `voice-00` | Warm, curious explanatory storytelling | Default narrator / male lead |
+| Female co-star or narrator | `voice-01` | Dry, comedic, skeptical delivery (Nora) | Female character or female narration |
+
+If those IDs are already registered in the active Arena session, reuse them. In a new session, register/select the male narrator with Arena `add_voice` (`gender: masculine`, `use_case: narration`) and the female character with `add_voice` (`gender: feminine`, `use_case: characters`), auditioning for the voice directions above. Then use the returned `voice_id` with `generate_speech` for every cue assigned to that role. Record the actual session IDs in `production/audio.md`; the historical labels do not guarantee that the same IDs are available in a later session. Do not pass an unregistered ID, silently substitute a different Arena voice, or call the local TTS backend for Arena-made videos. If Arena voice generation is unavailable, ask before switching to the local fallback below. Use only the roles required by the film; `voice-00` is the default when a single narrator is enough.
+
+Generate each short cue into `<project>/audio/lines/<cue-id>.wav` (or another supported audio extension), then reference that file in `story/shots.json` as `dialogue[].src`. Measure the generated clip duration before timing the shot, and keep the existing sparse-speech limits. The voice profile is the only element borrowed from *Why You Never Actually Touch Anything*—do not reuse its dialogue or story.
+
 ---
 
-## 1. Dual-Engine Free TTS (`Skill/kit/audio/tts.py`)
+## 1. Local Dual-Engine TTS Fallback (`Skill/kit/audio/tts.py`)
 
-`tts.py` pairs **`edge-tts`** (for natural male voices) and **`Kokoro`** (for natural female voices) with automatic cross-engine fallback:
+Use this path outside Arena, or only after the user approves a fallback. `tts.py` pairs **`edge-tts`** (for natural male voices) and **`Kokoro`** (for natural female voices) with automatic cross-engine fallback:
 
 | Role | Default Preset | Engine | Voice ID |
 |------|----------------|--------|----------|
